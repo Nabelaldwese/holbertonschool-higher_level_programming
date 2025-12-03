@@ -1,55 +1,50 @@
 #!/usr/bin/python3
-"""
-5-text_indentation module.
-
-Defines a function that prints a text with 2 new lines after
-each of these characters: '.', '?' and ':'.
-
-There should be no leading or trailing spaces on any printed line.
+"""Module that defines text_indentation function.
 """
 
 
 def text_indentation(text):
-    """
-    Print `text` with 2 new lines after '.', '?' and ':'.
+    """Print text with 2 new lines after '.', '?' and ':'.
 
     Args:
-        text (str): The text to format and print.
+        text (str): The text to be printed.
 
     Raises:
-        TypeError: If `text` is not a string.
+        TypeError: If text is not a string.
     """
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    pending_space = False   # مسافة لسه ما طبعناها (نقرر لاحقاً نطبعها أو نلغيها)
-    line_started = False    # هل بدأنا نطبع حروف في السطر الحالي؟
+    separators = ".?:"
+    line = ""
+    i = 0
+    length = len(text)
 
-    for ch in text:
-        if ch == ' ':
-            # نأجل طباعة المسافة لين نعرف إذا بعدها علامة ترقيم أو حرف عادي
-            pending_space = True
+    while i < length:
+        ch = text[i]
+
+        if ch in separators:
+            # احذف الفراغات في نهاية السطر قبل العلامة
+            line = line.rstrip()
+            line += ch
+            print(line, end="\n\n")
+            line = ""
+
+            # تخطَّ كل الفراغات بعد العلامة
+            i += 1
+            while i < length and text[i] == " ":
+                i += 1
             continue
 
-        if ch in ".?:":
-            # علامة ترقيم:
-            # لا نطبع المسافة المؤجلة قبلها (عشان ما يصير "Hola .")
-            print(ch, end="")
-            # نطبع سطرين جدد
-            print("\n\n", end="")
-            # نبدأ سطر جديد بعدها
-            pending_space = False
-            line_started = False
+        # تجاهل الفراغات في بداية السطر
+        if not line and ch == " ":
+            i += 1
             continue
 
-        # هنا حرف عادي (مو مسافة ومو علامة ترقيم)
-        if line_started and pending_space:
-            # في نص السطر: نطبع مسافة واحدة فقط
-            print(" ", end="")
-        # إذا السطر ما بدأ ولسه pending_space = True -> نتجاهلها (مسافات أول السطر)
+        line += ch
+        i += 1
 
-        print(ch, end="")
-        line_started = True
-        pending_space = False
-
-    # ما نطبع newline إضافي في النهاية
+    # اطبع الباقي إن وجد بدون فراغات في البداية/النهاية
+    line = line.strip()
+    if line:
+        print(line, end="")
