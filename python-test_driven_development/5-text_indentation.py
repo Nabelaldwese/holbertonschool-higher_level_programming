@@ -1,32 +1,28 @@
 #!/usr/bin/python3
 """
-Function that prints a text with 2 new lines after ., ? and :
+Module for text_indentation function.
 """
 
 
 def text_indentation(text):
-    """Prints text with 2 new lines after each '.', '?' and ':'"""
-
+    """
+    Prints text with 2 new lines after '.', '?' and ':'.
+    """
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    result = ""
-    i = 0
+    new_text = ""
+    skip_space = True  # تخطي المسافات في بداية الأسطر
 
-    while i < len(text):
-        result += text[i]
+    for ch in text:
+        if ch in ".?:":
+            new_text += ch + "\n\n"
+            skip_space = True  # ابدأ سطر جديد بدون مسافات
+        else:
+            if skip_space:
+                if ch == " ":
+                    continue
+                skip_space = False
+            new_text += ch
 
-        if text[i] in ".?:":
-            result = result.rstrip()
-            print(result)
-            print()
-            result = ""
-            i += 1
-            while i < len(text) and text[i] == " ":
-                i += 1
-            continue
-
-        i += 1
-
-    if result.strip() != "":
-        print(result.strip(), end="")
+    print(new_text, end="")
