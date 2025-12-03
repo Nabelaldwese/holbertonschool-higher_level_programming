@@ -11,18 +11,22 @@ def text_indentation(text):
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    new_text = ""
-    skip_space = True  # تخطي المسافات في بداية الأسطر
+    result = ""
+    i = 0
 
-    for ch in text:
-        if ch in ".?:":
-            new_text += ch + "\n\n"
-            skip_space = True  # ابدأ سطر جديد بدون مسافات
-        else:
-            if skip_space:
-                if ch == " ":
-                    continue
-                skip_space = False
-            new_text += ch
+    while i < len(text):
+        result += text[i]
 
-    print(new_text, end="")
+        if text[i] in ".?:":
+            result += "\n\n"
+
+            i += 1
+            while i < len(text) and text[i] == " ":
+                i += 1
+            continue
+
+        i += 1
+
+    # اطبع كل سطر بدون مسافات زائدة بالبداية أو النهاية
+    for line in result.split("\n"):
+        print(line.strip())
