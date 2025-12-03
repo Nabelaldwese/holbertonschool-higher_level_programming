@@ -1,32 +1,55 @@
 #!/usr/bin/python3
 """
-Module for text_indentation function.
+5-text_indentation module.
+
+Defines a function that prints a text with 2 new lines after
+each of these characters: '.', '?' and ':'.
+
+There should be no leading or trailing spaces on any printed line.
 """
 
 
 def text_indentation(text):
     """
-    Prints text with 2 new lines after '.', '?' and ':'.
+    Print `text` with 2 new lines after '.', '?' and ':'.
+
+    Args:
+        text (str): The text to format and print.
+
+    Raises:
+        TypeError: If `text` is not a string.
     """
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    result = ""
-    i = 0
+    pending_space = False   # مسافة لسه ما طبعناها (نقرر لاحقاً نطبعها أو نلغيها)
+    line_started = False    # هل بدأنا نطبع حروف في السطر الحالي؟
 
-    while i < len(text):
-        result += text[i]
-
-        if text[i] in ".?:":
-            result += "\n\n"
-
-            i += 1
-            while i < len(text) and text[i] == " ":
-                i += 1
+    for ch in text:
+        if ch == ' ':
+            # نأجل طباعة المسافة لين نعرف إذا بعدها علامة ترقيم أو حرف عادي
+            pending_space = True
             continue
 
-        i += 1
+        if ch in ".?:":
+            # علامة ترقيم:
+            # لا نطبع المسافة المؤجلة قبلها (عشان ما يصير "Hola .")
+            print(ch, end="")
+            # نطبع سطرين جدد
+            print("\n\n", end="")
+            # نبدأ سطر جديد بعدها
+            pending_space = False
+            line_started = False
+            continue
 
-    # اطبع كل سطر بدون مسافات زائدة بالبداية أو النهاية
-    for line in result.split("\n"):
-        print(line.strip())
+        # هنا حرف عادي (مو مسافة ومو علامة ترقيم)
+        if line_started and pending_space:
+            # في نص السطر: نطبع مسافة واحدة فقط
+            print(" ", end="")
+        # إذا السطر ما بدأ ولسه pending_space = True -> نتجاهلها (مسافات أول السطر)
+
+        print(ch, end="")
+        line_started = True
+        pending_space = False
+
+    # ما نطبع newline إضافي في النهاية
