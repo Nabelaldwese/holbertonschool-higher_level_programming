@@ -7,18 +7,18 @@ class Rectangle:
     """Represents a rectangle."""
 
     def __init__(self, width=0, height=0):
-        """Initialize rectangle with width and height."""
+        """Initialize the rectangle with width and height."""
         self.width = width
         self.height = height
 
     @property
     def width(self):
-        """Retrieve the width."""
+        """Retrieve the width of the rectangle."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """Set the width with validation."""
+        """Set the width with validation rules."""
         if type(value) is not int:
             raise TypeError("width must be an integer")
         if value < 0:
@@ -27,12 +27,12 @@ class Rectangle:
 
     @property
     def height(self):
-        """Retrieve the height."""
+        """Retrieve the height of the rectangle."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """Set the height with validation."""
+        """Set the height with validation rules."""
         if type(value) is not int:
             raise TypeError("height must be an integer")
         if value < 0:
@@ -40,4 +40,30 @@ class Rectangle:
         self.__height = value
 
     def area(self):
-        """Return the area of
+        """Return the area of the rectangle."""
+        return self.__width * self.__height
+
+    def perimeter(self):
+        """Return the perimeter of the rectangle.
+        If width or height is 0, perimeter is 0.
+        """
+        if self.__width == 0 or self.__height == 0:
+            return 0
+        return 2 * (self.__width + self.__height)
+
+    def __str__(self):
+        """Return the rectangle printed using '#' characters."""
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        lines = []
+        for _ in range(self.__height):
+            lines.append("#" * self.__width)
+        return "\n".join(lines)
+
+    def __repr__(self):
+        """Return a string that can recreate the rectangle using eval()."""
+        return "Rectangle({}, {})".format(self.__width, self.__height)
+
+    def __del__(self):
+        """Print a message when the rectangle instance is deleted."""
+        print("Bye rectangle...")
