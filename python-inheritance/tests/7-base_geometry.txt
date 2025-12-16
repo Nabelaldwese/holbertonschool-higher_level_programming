@@ -1,3 +1,8 @@
+cat > tests/7-base_geometry.txt <<'EOF'
+BaseGeometry - integer_validator
+===============================
+
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
 >>> bg = BaseGeometry()
 >>> bg.integer_validator("my_int", 12)
 >>> bg.integer_validator("width", 89)
@@ -13,3 +18,15 @@ ValueError: age must be greater than 0
 >>> bg.integer_validator("distance", -4)
 Traceback (most recent call last):
 ValueError: distance must be greater than 0
+
+>>> bg.integer_validator("age", 13.5)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", True)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented
