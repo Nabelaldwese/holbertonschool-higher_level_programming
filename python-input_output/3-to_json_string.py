@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module that provides a function to return JSON representation of an object."""
+"""Module for JSON serialization."""
 import json
 
 
