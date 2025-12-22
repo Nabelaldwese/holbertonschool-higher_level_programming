@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for converting a class instance to a JSON-serializable dict."""
+"""Module for converting class instances to JSON."""
 
 
 def class_to_json(obj):
