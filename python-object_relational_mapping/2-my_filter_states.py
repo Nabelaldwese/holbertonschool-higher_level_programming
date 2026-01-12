@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Lists states from the database hbtn_0e_0_usa
-where the state name matches the user input.
+Displays all states where name matches the user input.
 """
 
 import sys
