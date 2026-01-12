@@ -7,8 +7,7 @@ import sys
 import MySQLdb
 
 
-def main():
-    """Connects to MySQL and prints matching states."""
+if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
@@ -33,7 +32,3 @@ def main():
 
     cur.close()
     db.close()
-
-
-if __name__ == "__main__":
-    main()
