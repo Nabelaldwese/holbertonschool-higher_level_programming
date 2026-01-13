@@ -1,28 +1,46 @@
 #!/usr/bin/python3
-"""takes in an argument and displays all values
-in the states table of hbtn_0e_0_usa
-where name matches the argument"""
+"""
+2-my_filter_states.py
 
-if _name_ == "_main_":
+Takes MySQL credentials and a state name, then displays matching rows
+from the states table in hbtn_0e_0_usa sorted by id (ascending).
+Uses MySQLdb and SQL query string formatting with user input.
+"""
 
-    import MySQLdb
-    import sys
+import sys
+import MySQLdb
+
+
+def main():
+    """Entry point."""
+    username = sys.argv[1]
+    password = sys.argv[2]
+    db_name = sys.argv[3]
+    state_name = sys.argv[4]
 
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
-        user=sys.argv[1],
-        passwd=sys.argv[2],
-        db=sys.argv[3],
+        user=username,
+        passwd=password,
+        db=db_name,
+        charset="utf8"
     )
-
     cur = db.cursor()
-    cur.execute(
-        "SELECT * FROM states WHERE name LIKE BINARY '{}'\
-                ORDER BY states.id ASC".format(
-            sys.argv[4]
-        )
+
+    # Must use format with user input (as per task requirement)
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(
+        state_name
     )
-    rows = cur.fetchall()
-    for row in rows:
+    cur.execute(query)
+
+    for row in cur.fetchall():
         print(row)
+
+    cur.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
+
