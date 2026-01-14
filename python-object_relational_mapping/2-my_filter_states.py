@@ -3,7 +3,7 @@
 in the states table of hbtn_0e_0_usa
 where name matches the argument"""
 
-if _name_ == "_main_":
+if __name__ == "__main__":
 
     import MySQLdb
     import sys
