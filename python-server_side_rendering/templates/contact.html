@@ -1,0 +1,16 @@
+cat > templates/contact.html <<'EOF'
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Contact - My Flask App</title>
+  </head>
+  <body>
+    {% include 'header.html' %}
+
+    <h1>Contact Us</h1>
+    <p>This page contains contact information and ways to reach us.</p>
+
+    {% include 'footer.html' %}
+  </body>
+</html>
+EOF
